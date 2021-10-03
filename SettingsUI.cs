@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using JHSoftware.SimpleDNS;
 using JHSoftware.SimpleDNS.Plugin;
 
 namespace AliasZonesPlugIn
@@ -26,7 +27,7 @@ namespace AliasZonesPlugIn
 
     public override bool ValidateData()
     {
-      DomainName d=null;
+      DomName d=DomName.Root;
       string x;
       string y="";
       var rdr = new System.IO.StringReader(txtTo.Text.Trim());
@@ -36,7 +37,7 @@ namespace AliasZonesPlugIn
         if (x == null) break;
         if (x.Length== 0) continue;
         x = x.Replace(" ", "");
-        if (!DomainName.TryParse(x, ref d))
+        if (!DomName.TryParse(x, ref d))
         {
           ShowErr("Invalid domain name in 'Alias zone names': " + x);
           return false;
@@ -52,7 +53,7 @@ namespace AliasZonesPlugIn
       }
 
       txtFrom.Text = txtFrom.Text.Trim().ToLowerInvariant();
-      if (!DomainName.TryParse(txtFrom.Text, ref d))
+      if (!DomName.TryParse(txtFrom.Text, ref d))
       {
         ShowErr("Invalid 'Clone from zone' domain name");
         return false;
