@@ -11,9 +11,8 @@ namespace AliasZonesPlugIn
     DomName FromZone;
     Dictionary<DomName, object> ToZones;
 
-    public event IPlugInBase.AsyncErrorEventHandler AsyncError;
-    public event IPlugInBase.LogLineEventHandler LogLine;
-    public event IPlugInBase.SaveConfigEventHandler SaveConfig;
+    private IHost _Host;
+    IHost IPlugInBase.Host { get => _Host; set => _Host = value; }
 
     public IPlugInBase.PlugInTypeInfo GetPlugInTypeInfo()
     {
@@ -82,14 +81,19 @@ namespace AliasZonesPlugIn
       return;
     }
 
-    public void StartService()
-    {
-      return;
-    }
     public void StopService()
     {
       return;
     }
 
+    Task IPlugInBase.StartService()
+    {
+      return Task.CompletedTask;
+    }
+
+    Task<object> IPlugInBase.Signal(int code, object data)
+    {
+      return Task.FromResult<object>(null);
+    }
   }
 }
