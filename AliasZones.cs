@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AliasZonesPlugIn 
 {
-  public class AliasZones : ICloneAnswerPlugIn
+  public class AliasZones : ICloneAnswer , IOptionsUI
   {
     DomName FromZone;
     Dictionary<DomName, object> ToZones;
@@ -44,16 +44,16 @@ namespace AliasZonesPlugIn
       rdr.Close();
     }
 
-    Task<ICloneAnswerPlugIn.Result> ICloneAnswerPlugIn.Lookup(IDNSRequest request)
+    Task<ICloneAnswer.Result> ICloneAnswer.LookupCloneAnswer(IDNSRequest request)
     {
       var tz = request.QName;
       var ct = 0;
       while (true)
       {
-        if (tz == DomName.Root) return Task.FromResult<ICloneAnswerPlugIn.Result>(null);
+        if (tz == DomName.Root) return Task.FromResult<ICloneAnswer.Result>(null);
         if(ToZones.ContainsKey(tz))
         {
-          return Task.FromResult(new ICloneAnswerPlugIn.Result
+          return Task.FromResult(new ICloneAnswer.Result
           {
             CloneFromZone = FromZone,
             PrefixLabels = ct,
@@ -91,9 +91,5 @@ namespace AliasZonesPlugIn
       return Task.CompletedTask;
     }
 
-    Task<object> IPlugInBase.Signal(int code, object data)
-    {
-      return Task.FromResult<object>(null);
-    }
   }
 }
