@@ -14,12 +14,12 @@ namespace AliasZonesPlugIn
     private IHost _Host;
     IHost IPlugInBase.Host { get => _Host; set => _Host = value; }
 
-    public IPlugInBase.PlugInTypeInfo GetPlugInTypeInfo()
+    public IPlugInBase.PlugInTypeInfo GetTypeInfo()
     {
       IPlugInBase.PlugInTypeInfo rv;
       rv.Name = "Alias Zones";  
       rv.Description = "Provides DNS records for one or more 'virtual' zones by cloning records from another zone (local or remote).";
-      rv.InfoURL = "https://simpledns.plus/kb/167/alias-zones-plug-in";
+      rv.InfoURL = "https://simpledns.plus/plugin-aliaszones";
       return rv;
     }
 
@@ -44,7 +44,7 @@ namespace AliasZonesPlugIn
       rdr.Close();
     }
 
-    Task<ICloneAnswer.Result> ICloneAnswer.LookupCloneAnswer(IDNSRequest request)
+    Task<ICloneAnswer.Result> ICloneAnswer.LookupCloneAnswer(IRequestContext request)
     {
       var tz = request.QName;
       var ct = 0;
