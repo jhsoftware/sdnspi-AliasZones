@@ -14,9 +14,9 @@ namespace AliasZonesPlugIn
     private IHost _Host;
     IHost IPlugInBase.Host { get => _Host; set => _Host = value; }
 
-    public IPlugInBase.PlugInTypeInfo GetTypeInfo()
+    public TypeInfo GetTypeInfo()
     {
-      IPlugInBase.PlugInTypeInfo rv;
+      TypeInfo rv;
       rv.Name = "Alias Zones";  
       rv.Description = "Provides DNS records for one or more 'virtual' zones by cloning records from another zone (local or remote).";
       rv.InfoURL = "https://simpledns.plus/plugin-aliaszones";
@@ -70,15 +70,6 @@ namespace AliasZonesPlugIn
     public bool InstanceConflict(string config1, string config2, ref string errorMsg)
     {
       return false;
-    }
-
-    public string SaveState()
-    {
-      return null;
-    }
-    public void LoadState(string state)
-    {
-      return;
     }
 
     public void StopService()
